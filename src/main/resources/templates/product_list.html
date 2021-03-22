@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Add CSS and JS to Thymeleaf</title>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>Seznam produktů</h2>
+<section>
+    <div th:each="product: ${productList}">
+        <h4 th:text="${product.getName()}"></h4>
+    </div>
+</section>
+</body>
+</html>
