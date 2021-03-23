@@ -22,19 +22,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void Add(long id) {
+    public void add(long id) {
         Product product = productRepository.findById(id).orElseThrow(NoSuchElementException::new);
-
-        cart.put(product, 1);
+        if (cart.containsKey(product)) {
+            cart.replace(product, cart.get(product) + 1);
+        } else {
+            cart.put(product, 1);
+        }
     }
 
     @Override
-    public void Remove(long id) {
+    public void remove(long id) {
 
     }
 
     @Override
     public Map<Product, Integer> getCart() {
-        return null;
+        return cart;
     }
 }

@@ -21,7 +21,6 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@RunWith(SpringRunner.class)
 public class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
