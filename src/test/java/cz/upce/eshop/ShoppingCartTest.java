@@ -30,7 +30,7 @@ public class ShoppingCartTest {
 
         List<Product> all = productRepository.findAll();
 
-//        Assertions.assertThat(all.size()).isEqualTo(1);
+        long productId = all.get(0).getId();
 
         shoppingCartService.add(all.get(0).getId());
 
@@ -41,12 +41,24 @@ public class ShoppingCartTest {
         //obsahuje vložený produkt v počtu = 1
         Assertions.assertThat(shoppingCartService.getCart().get(all.get(0))).isEqualTo(1);
 
-        shoppingCartService.add(all.get(0).getId());
+        shoppingCartService.add(productId);
         //obsahuje vložený produkt v počtu = 2
         Assertions.assertThat(shoppingCartService.getCart().get(all.get(0))).isEqualTo(2);
 
-        shoppingCartService.add(all.get(0).getId());
+        shoppingCartService.add(productId);
         //obsahuje vložený produkt v počtu = 3
         Assertions.assertThat(shoppingCartService.getCart().get(all.get(0))).isEqualTo(3);
+
+        shoppingCartService.remove(productId);
+        //obsahuje produkty vyjma odebraného v počtu = 2
+        Assertions.assertThat(shoppingCartService.getCart().get(all.get(0))).isEqualTo(2);
+
+        shoppingCartService.remove(productId);
+        //obsahuje produkty vyjma odebraného v počtu = 1
+        Assertions.assertThat(shoppingCartService.getCart().get(all.get(0))).isEqualTo(1);
+
+        shoppingCartService.remove(productId);
+        //obsahuje produkty vyjma odebraného v počtu = 0
+        Assertions.assertThat(shoppingCartService.getCart().containsKey(all.get(0))).isFalse();
     }
 }

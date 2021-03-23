@@ -11,4 +11,6 @@ public interface ShoppingCartService {
     void remove(long id);
 
     Map<Product, Integer> getCart();
+
+    void checkout();
 }

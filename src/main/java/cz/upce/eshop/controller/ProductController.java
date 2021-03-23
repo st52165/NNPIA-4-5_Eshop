@@ -3,6 +3,8 @@ package cz.upce.eshop.controller;
 import cz.upce.eshop.dto.AddOrEditProductDto;
 import cz.upce.eshop.entity.Product;
 import cz.upce.eshop.repository.ProductRepository;
+import cz.upce.eshop.service.FileService;
+import cz.upce.eshop.service.FileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private FileService fileService;
 
     @ExceptionHandler(RuntimeException.class)
     public String handleException() {
@@ -40,7 +44,13 @@ public class ProductController {
             model.addAttribute("product", new AddOrEditProductDto());
         } else {
             Product product = productRepository.findById(id).orElse(new Product());
-            model.addAttribute("product", product);
+
+            AddOrEditProductDto dto = new AddOrEditProductDto();
+            dto.setId(product.getId());
+            dto.setName(product.getName());
+            dto.setDescription(product.getDescription());
+
+            model.addAttribute("product", dto);
         }
         return "product_form";
     }
@@ -50,6 +60,10 @@ public class ProductController {
         Product product = new Product();
         product.setId(addOrEditProductDto.getId());
         product.setName(addOrEditProductDto.getName());
+        product.setDescription(addOrEditProductDto.getDescription());
+
+        String fileName = fileService.upload(addOrEditProductDto.getImage());
+        product.setPathToImage(fileName);
         productRepository.save(product);
         return "redirect:/";
     }

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Add CSS and JS to Thymeleaf</title>
-    <link th:href="@{/main.css}" rel="stylesheet"/>
-</head>
+<div th:replace="fragments/head::htmlHead"></div>
 <body>
+<div th:replace="fragments/navigation::navbar"></div>
 <h2>Seznam produktů</h2>
-<section>
-    <div th:each="product: ${productList}">
-        <h4 th:text="${product.getName()}"></h4>
+<section class="product-list">
+    <div th:each="product: ${productList}" class="product">
+        <a th:href="@{product-detail/{id} (id=${product.getId()})}"><h4 th:text="${product.getName()}"></h4></a>
+        <img th:if="${product.pathToImage!=null && product.pathToImage!=''}"
+             th:src="@{/images/{path} (path=${product.getPathToImage()})}" width="100">
+        <a th:href="@{'/shopping-cart-remove/' + ${product.getId()}}" class="add-to-cart-button block">-</a>
+        <a th:href="@{'/shopping-cart-add/' + ${product.getId()}}" class="add-to-cart-button block">+</a>
     </div>
 </section>
 </body>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="cs">
+<div th:replace="fragments/head::htmlHead"></div>
+<body>
+<div th:replace="fragments/navigation::navbar"></div>
+<h2>Nákupní košík</h2>
+<section>
+    <div th:each="cartItem: ${shoppingCart.entrySet()}">
+        <h4 th:text="${cartItem.getKey().getName()}"></h4>
+        <a th:href="@{'/shopping-cart-remove/' + ${cartItem.getKey().getId()}}" class="add-to-cart-button">-</a>
+        <span th:text="${cartItem.getValue()}"></span>
+        <a th:href="@{'/shopping-cart-add/' + ${cartItem.getKey().getId()}}" class="add-to-cart-button">+</a>
+    </div>
+</section>
+<section style="margin-top: 20px;">
+    <a th:href="@{'/checkout'}" class="checkout-cart-button">Vyprázdnit košík</a>
+</section>
+</body>
+</html>

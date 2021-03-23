@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Add CSS and JS to Thymeleaf</title>
-    <link th:href="@{/main.css}" rel="stylesheet"/>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="cs">
+<div th:replace="fragments/head::htmlHead"></div>
 <body>
+<div th:replace="fragments/navigation::navbar"></div>
 <h2>Detail produktu</h2>
 <section>
-    <h4 th:text="${product.getName()}"></h4>
+    <span style="font-weight: bold;">Název:</span>
+    <h4 th:text="${product.name}"></h4>
+    <span style="font-weight: bold;">Popis:</span>
+    <p th:text="${product.description}"></p>
+    <span style="font-weight: bold;">Obrázek:</span><br>
+    <img th:if="${product.pathToImage!=null&& product.pathToImage!=''}"
+         th:src="@{/images/{path} (path=${product.getPathToImage()})}">
 </section>
 </body>
 </html>

@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Add CSS and JS to Thymeleaf</title>
-    <link th:href="@{/main.css}" rel="stylesheet"/>
-</head>
+<div th:replace="fragments/head::htmlHead"></div>
 <body>
+<div th:replace="fragments/navigation::navbar"></div>
 <h2>Přidat produkt</h2>
 <section>
-    <form action="#" method="post" th:action="@{/product-form-process}" th:object="${product}">
+    <form action="#" method="post" enctype="multipart/form-data" th:action="@{/product-form-process}"
+          th:object="${product}">
+
         <input type="hidden" th:field="*{id}"/>
         <label>
             Název:
             <input type="text" th:field="*{name}"/>
+        </label><br>
+        <label>
+            Popis:
+            <textarea type="text" th:field="*{description}"></textarea>
+        </label><br>
+        <label>
+            Obrázek:
+            <input type="file" th:field="*{image}"/>
         </label><br>
         <input type="submit" value="Přidat" style="margin: 10px 0 0 50px;"/>
     </form>
