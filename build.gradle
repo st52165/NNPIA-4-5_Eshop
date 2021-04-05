@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'groovy'
 }
 
 group = 'cz.upce'
@@ -21,6 +22,9 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    runtimeOnly 'com.h2database:h2:'
+    testImplementation 'org.codehaus.groovy:groovy'
 }
 
 test {

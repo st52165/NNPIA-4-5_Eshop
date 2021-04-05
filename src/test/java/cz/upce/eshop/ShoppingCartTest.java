@@ -1,5 +1,6 @@
 package cz.upce.eshop;
 
+import cz.upce.eshop.datafactory.ProductTestDataFactory;
 import cz.upce.eshop.entity.Product;
 import cz.upce.eshop.repository.ProductRepository;
 import cz.upce.eshop.service.ShoppingCartService;
@@ -22,11 +23,12 @@ public class ShoppingCartTest {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    private ProductTestDataFactory productTestDataFactory;
+
     @Test
     void addOneToShoppingCart() {
-        Product product = new Product();
-        product.setName("MujProdukt");
-        productRepository.save(product);
+        productTestDataFactory.saveProduct("MujProdukt");
 
         List<Product> all = productRepository.findAll();
 

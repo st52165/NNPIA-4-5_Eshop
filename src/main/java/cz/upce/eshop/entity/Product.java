@@ -22,6 +22,16 @@ public class Product {
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<OrderHasProduct> productInOrders;
 
+    @ManyToOne(optional = false)
+    private Supplier supplier;
+
+    public Product() {
+    }
+
+    public Product(String name) {
+        this.name = name;
+    }
+
     public Set<OrderHasProduct> getProductInOrders() {
         return productInOrders;
     }
@@ -60,6 +70,10 @@ public class Product {
 
     public void setPathToImage(String pathToImage) {
         this.pathToImage = pathToImage;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     @Override

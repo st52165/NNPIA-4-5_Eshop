@@ -1,6 +1,7 @@
 package cz.upce.eshop;
 
-import cz.upce.eshop.datafactory.ProductTestDataFactory;
+import cz.upce.eshop.datafactory.ProductTestDataFactory
+import cz.upce.eshop.datafactory.SupplierTestDataFactory;
 import cz.upce.eshop.entity.Order;
 import cz.upce.eshop.entity.OrderHasProduct;
 import cz.upce.eshop.entity.Product;
@@ -23,47 +24,25 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(ProductTestDataFactory.class)
-public class ProductRepositoryTest {
+@Import([ProductTestDataFactory.class, SupplierTestDataFactory.class])
+public class ProductRepositoryGroovyTest {
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderHasProductRepository orderHasProductRepository;
-
     @Autowired
     private ProductTestDataFactory productTestDataFactory;
 
     @Test
     void saveProductTest() {
-        Product product = new Product("MujProdukt");
-        productTestDataFactory.saveProduct(product);
 
+        Product testProduct = new Product("MujProdukt");
+        productTestDataFactory.saveProduct(testProduct);
 
         List<Product> allProducts = productRepository.findAll();
         Assertions.assertThat(allProducts.size()).isEqualTo(11);
 
-        Order order = new Order();
-        order.setState(StateEnum.NEW);
-        orderRepository.save(order);
-
-        OrderHasProduct orderHasProduct = new OrderHasProduct();
-        orderHasProduct.setProduct(product);
-        orderHasProduct.setAmount(5);
-        orderHasProduct.setOrder(order);
-
-        OrderHasProduct orderHasProduct2 = new OrderHasProduct();
-        orderHasProduct2.setProduct(product);
-        orderHasProduct2.setAmount(5);
-        orderHasProduct2.setOrder(order);
-
-        orderHasProductRepository.save(orderHasProduct);
-        orderHasProductRepository.save(orderHasProduct2);
-
-        List<Order> all = orderRepository.findAll();
-
-        Assertions.assertThat(all.size()).isEqualTo(11);
+        def readFromDb = productRepository.findById(testProduct.getId()).get();
+        Assertions.assertThat(readFromDb.getName()).isEqualTo("MujProdukt");
+        Assertions.assertThat(readFromDb.getDescription()).isEqualTo("Test description");
     }
 
 
