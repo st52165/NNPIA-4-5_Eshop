@@ -25,6 +25,8 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2:'
     testImplementation 'org.codehaus.groovy:groovy'
+    testCompile 'commons-beanutils:commons-beanutils:1.9.4'
+    testCompile 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 test {

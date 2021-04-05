@@ -1,20 +1,20 @@
 package cz.upce.eshop;
 
-import cz.upce.eshop.datafactory.ProductTestDataFactory;
+import cz.upce.eshop.datafactory.Creator;
 import cz.upce.eshop.entity.Product;
 import cz.upce.eshop.repository.ProductRepository;
 import cz.upce.eshop.service.ShoppingCartService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-
 
 import java.util.List;
 
 //@RunWith(SpringRunner.class)
 //@DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest
 public class ShoppingCartTest {
 
@@ -24,11 +24,11 @@ public class ShoppingCartTest {
     private ShoppingCartService shoppingCartService;
 
     @Autowired
-    private ProductTestDataFactory productTestDataFactory;
+    private Creator creator;
 
     @Test
     void addOneToShoppingCart() {
-        productTestDataFactory.saveProduct("MujProdukt");
+        creator.save(new Product("MujProdukt"));
 
         List<Product> all = productRepository.findAll();
 

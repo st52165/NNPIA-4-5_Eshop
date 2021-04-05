@@ -72,6 +72,10 @@ public class Product {
         this.pathToImage = pathToImage;
     }
 
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }

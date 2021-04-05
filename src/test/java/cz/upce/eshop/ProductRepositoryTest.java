@@ -1,6 +1,6 @@
 package cz.upce.eshop;
 
-import cz.upce.eshop.datafactory.ProductTestDataFactory;
+import cz.upce.eshop.datafactory.Creator;
 import cz.upce.eshop.entity.Order;
 import cz.upce.eshop.entity.OrderHasProduct;
 import cz.upce.eshop.entity.Product;
@@ -23,7 +23,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(ProductTestDataFactory.class)
+@Import(Creator.class)
 public class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
@@ -33,12 +33,12 @@ public class ProductRepositoryTest {
     private OrderHasProductRepository orderHasProductRepository;
 
     @Autowired
-    private ProductTestDataFactory productTestDataFactory;
+    private Creator creator;
 
     @Test
     void saveProductTest() {
         Product product = new Product("MujProdukt");
-        productTestDataFactory.saveProduct(product);
+        creator.save(product);
 
 
         List<Product> allProducts = productRepository.findAll();
