@@ -7,14 +7,10 @@ import cz.upce.eshop.service.ShoppingCartService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-//@RunWith(SpringRunner.class)
-//@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @SpringBootTest
 public class ShoppingCartTest {
 
@@ -28,7 +24,8 @@ public class ShoppingCartTest {
 
     @Test
     void addOneToShoppingCart() {
-        creator.save(new Product("MujProdukt"));
+        Product testProduct = new Product("MujProdukt");
+        creator.save(testProduct);
 
         List<Product> all = productRepository.findAll();
 
@@ -62,5 +59,8 @@ public class ShoppingCartTest {
         shoppingCartService.remove(productId);
         //obsahuje produkty vyjma odebraného v počtu = 0
         Assertions.assertThat(shoppingCartService.getCart().containsKey(all.get(0))).isFalse();
+
+        //nakonec se testovní produkt vymaže z DB
+        productRepository.delete(testProduct);
     }
 }

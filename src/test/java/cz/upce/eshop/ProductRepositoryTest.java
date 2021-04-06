@@ -63,7 +63,7 @@ public class ProductRepositoryTest {
 
         List<Order> all = orderRepository.findAll();
 
-        Assertions.assertThat(all.size()).isEqualTo(11);
+        Assertions.assertThat(all.size()).isEqualTo(12);
     }
 
 

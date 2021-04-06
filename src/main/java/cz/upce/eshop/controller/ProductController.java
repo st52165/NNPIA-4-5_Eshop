@@ -2,7 +2,9 @@ package cz.upce.eshop.controller;
 
 import cz.upce.eshop.dto.AddOrEditProductDto;
 import cz.upce.eshop.entity.Product;
+import cz.upce.eshop.entity.Supplier;
 import cz.upce.eshop.repository.ProductRepository;
+import cz.upce.eshop.repository.SupplierRepository;
 import cz.upce.eshop.service.FileService;
 import cz.upce.eshop.service.FileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SupplierRepository supplierRepository;
     @Autowired
     private FileService fileService;
 
@@ -62,8 +66,13 @@ public class ProductController {
         product.setName(addOrEditProductDto.getName());
         product.setDescription(addOrEditProductDto.getDescription());
 
+        //Dočasně, smazat, dodělat!
+        Supplier supplier = supplierRepository.findById(7L).get();
+        product.setSupplier(supplier);
+
         String fileName = fileService.upload(addOrEditProductDto.getImage());
         product.setPathToImage(fileName);
+
         productRepository.save(product);
         return "redirect:/";
     }
